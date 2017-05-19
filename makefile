@@ -5,16 +5,16 @@ test: all
 all: gen a b main
 
 main: gen a b dir
-	gcc -Wall -o out/main main.c
+	gcc main.c -Wall -o out/main
 
 a: dir
-	gcc -Wall -lcrypto -lrhash -o out/a a.c
+	gcc a.c -Wall -o out/a -lcrypto -lrhash
 
 b: dir
-	gcc -Wall -lcrypto -lrhash -o out/b b.c
+	gcc b.c -Wall -o out/b -lcrypto -lrhash
 
 gen: dir
-	gcc -Wall -lcrypto -o out/gen gen.c
+	gcc gen.c -Wall -o out/gen -lcrypto
 
 dir:
 	-mkdir out
