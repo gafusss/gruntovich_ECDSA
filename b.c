@@ -98,12 +98,14 @@ int main(int argc, char *argv[], char *envp[])
             if ((size == -1) || (size < sizeof(struct authmsg_t)) || ((msg->signature_size + sizeof(struct authmsg_t)) != size))
             {
                 fprintf(stderr, "Error receiving message or message size mismatch, ignoring\n");
-                if (!single) continue;
+                if (single) return -100;
+                else continue;
             }
             if (recv(client_socket, b, 1000, 0) != 0)
             {
                 fprintf(stderr, "Could not receive FIN, ignoring\n");
-                if (!single) continue;
+                if (single) return -101;
+                else continue;
             }
             close(client_socket);
             int32_t timestamp = time(NULL);
@@ -128,7 +130,8 @@ int main(int argc, char *argv[], char *envp[])
                 {
                     printf(" sign = FAILED\n");
                     ECDSA_SIG_free(sig);
-                    if (!single) continue;
+                    if (single) return -102;
+                    else continue;
                 }
 
                 ECDSA_SIG_free(sig);
