@@ -109,6 +109,12 @@ int main(int argc, char *argv[], char *envp[])
             }
             close(client_socket);
             int32_t timestamp = time(NULL);
+            if (msg->data.identifier != B_ID)
+            {
+                fprintf(stderr, "Wrong identifier in message, ignoring\n");
+                if (single) return -102;
+                else continue;
+            }
 
             {
 
@@ -130,7 +136,7 @@ int main(int argc, char *argv[], char *envp[])
                 {
                     printf(" sign = FAILED\n");
                     ECDSA_SIG_free(sig);
-                    if (single) return -102;
+                    if (single) return -103;
                     else continue;
                 }
 
