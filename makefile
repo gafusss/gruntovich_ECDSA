@@ -1,3 +1,5 @@
+runtest:
+	cd out && ./main
 
 test: all
 	cd out && ./main
